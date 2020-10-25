@@ -1,0 +1,116 @@
+/* Remove the navbar's default margin-bottom and rounded borders */
+.navbar {
+	margin-bottom: 0;
+	border-radius: 0;
+}
+
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {
+	height: 450px;
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+	padding-top: 20px;
+	background-color: #f1f1f1;
+	height: 100%;
+}
+
+/* Set black background color, white text and some padding */
+footer {
+	background-color: #555;
+	color: white;
+	padding: 15px;
+}
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+	.sidenav {
+		height: auto;
+		padding: 15px;
+	}
+	.row.content {
+		height: auto;
+	}
+}
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Concert One", cursive;
+	font-size: 16px;
+}
+
+input {
+	height: 50px;
+	width: 100%;
+	padding: 6px;
+	margin-top: 10px;
+	font-size: 2.4em;
+	border: none;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+	background-color: white;
+}
+
+li {
+	height: 50px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 5px;
+	background-color: #ff5d88;
+	color: white;
+	font-size: 1.5em;
+	line-height: 1.5;
+}
+
+li:before {
+	content: "\200B";
+	position: absolute;
+}
+
+li::after {
+	content: " ";
+	display: block;
+	clear: both;
+}
+
+li button {
+	float: right;
+	border: none;
+	height: 40px;
+	cursor: pointer;
+	background-color: #ff9500;
+	color: white;
+	font-size: 1em;
+}
+
+li button:hover {
+	background-color: #febc5d;
+}
+
+.cities {
+	width: 200px;
+	margin: 0 auto;
+	margin-top: 40px;
+}
+
+.bg-red {
+	background-color: rgb(255, 1, 1);
+}
+.bg-green {
+	background-color: rgba(8, 131, 8, 0.788);
+}
+
+.bg-gray {
+	background-color: #cfdce9da;
+}
+.bg-yellow {
+	background-color: #ff9500;
+}
