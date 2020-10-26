@@ -114,3 +114,12 @@ li button:hover {
 .bg-yellow {
 	background-color: #ff9500;
 }
+
+h2 {
+	display: inline-block;
+	margin-left: 15px;
+}
+
+#todaycard {
+	border-style: ridge;
+}

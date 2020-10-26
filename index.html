@@ -5,12 +5,18 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
+			integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ="
+			crossorigin="anonymous"
+		></script>
 		<link
 			rel="stylesheet"
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
 		/>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 		<link rel="stylesheet" href="assets/css/style.css" />
 	</head>
 	<body>
@@ -41,81 +47,34 @@
 				</div>
 
 				<div class="col-sm-10 text-left">
-					<div class="card">
-						<h5 id="cardtitle" class="card-title"></h5>
-						<img id="cardimage" alt="Card image cap" />
+					<div class="card" id="todaycard">
+						<div class="row row-horizon">
+							<h2 id="cardtitle" class="card-title"><strong></strong></h2>
+							<img id="cardimage" alt="Card image cap" />
+						</div>
+
 						<div class="card-body">
 							<p id="tempF" class="card-text"></p>
 							<p id="humidity" class="card-text"></p>
 							<p id="wind" class="card-text"></p>
-							<p id="uvindex" class="card-text"></p>
+							<p class="card-text">
+								<span>UV Index:</span
+								><span id="uvindex" class="card-text"></span>
+							</p>
 						</div>
 					</div>
 
-					<div class="row row-horizon">
+					<div><strong>5-Day Forecast</strong></div>
+
+					<div class="row row-horizon" id="fcstsection">
 						<div class="col-md-2">
 							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
+								<h5 class="card-title" id="fcstdate0"></h5>
 								<p class="card-text">
-									This is a wider card with supporting text below as a natural
-									lead-in to additional content. This content is a little bit
-									longer.
+									<img id="fcstimage0" alt="Card image cap" />
 								</p>
-								<p class="card-text">
-									<small class="text-muted">Last updated 3 mins ago</small>
-								</p>
-							</div>
-						</div>
-						<div class="col-md-2">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">
-									This is a wider card with supporting text below as a natural
-									lead-in to additional content. This content is a little bit
-									longer.
-								</p>
-								<p class="card-text">
-									<small class="text-muted">Last updated 3 mins ago</small>
-								</p>
-							</div>
-						</div>
-						<div class="col-md-2">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">
-									This is a wider card with supporting text below as a natural
-									lead-in to additional content. This content is a little bit
-									longer.
-								</p>
-								<p class="card-text">
-									<small class="text-muted">Last updated 3 mins ago</small>
-								</p>
-							</div>
-						</div>
-						<div class="col-md-2">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">
-									This is a wider card with supporting text below as a natural
-									lead-in to additional content. This content is a little bit
-									longer.
-								</p>
-								<p class="card-text">
-									<small class="text-muted">Last updated 3 mins ago</small>
-								</p>
-							</div>
-						</div>
-						<div class="col-md-2">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">
-									This is a wider card with supporting text below as a natural
-									lead-in to additional content. This content is a little bit
-									longer.
-								</p>
-								<p class="card-text">
-									<small class="text-muted">Last updated 3 mins ago</small>
-								</p>
+								<p class="card-text" id="fcsttemp0"></p>
+								<p class="card-text" id="fcsthumidity0"></p>
 							</div>
 						</div>
 					</div>

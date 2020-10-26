@@ -1,169 +1,230 @@
-$(document).ready( function() {     
+$(document).ready(function () {
+	// Global Variables
 
-// Global Variables
-var APIKey = "2f894fb42bc94b948578a732b8d8b4a8";
+	// API key
+	var APIKey = "2f894fb42bc94b948578a732b8d8b4a8";
 
-var citiesInput = document.querySelector("#citiesText");
-var citiesForm = document.querySelector("#citiesForm");
-var citiesList = document.querySelector("#citiesList");
-var citiesCountSpan = document.querySelector("#citiesCount");
-var cityEntered = "";
+	var citiesInput = document.querySelector("#citiesText");
+	var citiesForm = document.querySelector("#citiesForm");
+	var citiesList = document.querySelector("#citiesList");
+	var citiesCountSpan = document.querySelector("#citiesCount");
+	var cityEntered = "";
 
-var cities = ["Irvine", "Grants Pass"];
+	var idValue = "";
 
-rendercities();
+	var cities = ["Irvine", "Grants Pass"];
 
-function rendercities() {
-  // Clear citiesList element and update citiesCountSpan
+	// retrieve today's date using moment and format for output
+	var today = moment().format("MMMM Do YYYY");
+	console.log(today);
 
-  citiesList.innerHTML = "";
-  citiesCountSpan.textContent = cities.length;
+	rendercities();
 
-  // Render a new li for each cities
-  for (var i = 0; i < cities.length; i++) {
+	function rendercities() {
+		// Clear citiesList element and update citiesCountSpan
 
-    var li = document.createElement("li");
-    li.textContent = cities[i];
-    citiesList.appendChild(li);
-  }
-}
+		citiesList.innerHTML = "";
+		citiesCountSpan.textContent = cities.length;
 
-// When form is submitted...
-citiesForm.addEventListener("submit", function(event) {
-  event.preventDefault();
+		// Render a new li for each cities
+		for (var i = 0; i < cities.length; i++) {
+			var li = document.createElement("li");
+			li.textContent = cities[i];
+			citiesList.appendChild(li);
+		}
+	}
 
-  var citiesText = citiesInput.value.trim();
+	// When form is submitted...
+	citiesForm.addEventListener("submit", function (event) {
+		event.preventDefault();
 
-  // Return from function early if submitted citiesText is blank
-  if (citiesText === "") {
-    return;
-  }
+		var citiesText = citiesInput.value.trim();
 
-  // Add new citiesText to cities array, clear the input
-  cities.push(citiesText);
-  citiesInput.value = "";
-  cityEntered = citiesText;
+		// Return from function early if submitted citiesText is blank
+		if (citiesText === "") {
+			return;
+		}
 
-// Call the function to retrieve the weather for the city entered in the search
-getWeather();
+		// Add new citiesText to cities array, clear the input
+		cities.push(citiesText);
+		citiesInput.value = "";
+		cityEntered = citiesText;
 
-  // Re-render the list
-  rendercities();
-});
+		// Call the function to retrieve the weather for the city entered in the search
+		getWeather();
 
-function getWeather() {
-  console.log(cityEntered);
-      // This is our API key. Add your own API key between the ""
-      var searchCity = cityEntered;
+		// Re-render the list
+		rendercities();
+	});
 
-      console.log("This is the value of Search City" + searchCity);
-			// Here we are building the URL we need to query the database
-			var queryURL =
-				"https://api.openweathermap.org/data/2.5/weather?q=" + searchCity + "&appid=" + 	APIKey;
+	function getWeather() {
+		console.log(cityEntered);
 
-       // Log the queryURL
-					console.log(queryURL);
-			// Here we run our AJAX call to the OpenWeatherMap API
+		var searchCity = cityEntered;
 
-      $.ajax({
-				url: queryURL,
-				method: "GET",
-			})
-				// We store all of the retrieved data inside of an object called "response"
-				.then(function (apiResult) {
-          
-          $("col-sm-10 text-left"); 
+		console.log("This is the value of Search City" + searchCity);
+		// Here we are building the URL we need to query the database
+		var queryURL =
+			"https://api.openweathermap.org/data/2.5/weather?q=" +
+			searchCity +
+			"&appid=" +
+			APIKey;
 
-					// Log the resulting object
-					console.log(apiResult);
+		// Log the queryURL
+		console.log(queryURL);
+		// Here we run our AJAX call to the OpenWeatherMap API
 
-          // Transfer content to HTML
-          var cityName = apiResult.name;
-          $("#cardtitle").text(cityName);
-     
-          var newIcon = $("#cardimage").attr("src", "http://openweathermap.org/img/w/" + apiResult.weather[0].icon + ".png" )
-              newIcon = $("#cardimage").addClass("card-img-top") 
-          console.log("newIcon " + newIcon);         
+		$.ajax({
+			url: queryURL,
+			method: "GET",
+		})
+			// We store all of the retrieved data inside of an object called "response"
+			.then(function (apiResult) {
+				$("col-sm-10 text-left");
 
+				// Log the resulting object
+				console.log(apiResult);
 
-					$("#wind").text("Wind Speed: " + apiResult.wind.speed);
-          $("#humidity").text("Humidity: " + apiResult.main.humidity);
+				// Transfer content to HTML
+				var cityName = apiResult.name;
+				cityName = cityName + " (" + today + ") ";
+				$("#cardtitle").text(cityName);
+
+				$("#wind").text("Wind Speed: " + apiResult.wind.speed);
+				$("#humidity").text("Humidity: " + apiResult.main.humidity);
+
+				// Convert the temp to fahrenheit
+				var tempF = (apiResult.main.temp - 273.15) * 1.8 + 32;
+
+				// add temp content to html
+				$("#temp").text("Temperature (K) " + apiResult.main.temp);
+				$("#tempF").text("Temperature (F) " + tempF.toFixed(2));
+
+				var tempFdiv = $("<div>")
+					.addClass("tempF")
+					.text(tempF.toFixed(2) + " Temperature (F)");
+				console.log("tempFdiv " + tempFdiv);
+
+				var newIcon = $("#cardimage").attr(
+					"src",
+					"http://openweathermap.org/img/w/" +
+						apiResult.weather[0].icon +
+						".png"
+				);
+				newIcon = $("#cardimage").addClass("card-img-top");
+				console.log("newIcon " + newIcon);
+				$("#cardimage").append(newIcon);
+
+				// Use the latitude and longitude to get the UV Index
+				getUVIndex(apiResult);
+			});
+	}
+
+	function getUVIndex(apiResult) {
+		console.log(apiResult);
+		// Same API Key for latitude longitude
+		var savedResult = apiResult;
+
+		console.log("Saved Variable Results passed to getUVINdex" + savedResult);
+		console.log("Try for LAT:" + apiResult.coord.lat);
+		console.log("Try for LON:" + apiResult.coord.lon);
+
+		// Here we are building the URL we need to query the database with lattitude and longitude
+		var uvqueryURL =
+			"https://api.openweathermap.org/data/2.5/onecall?lat=" +
+			apiResult.coord.lat +
+			"&lon=" +
+			apiResult.coord.lon +
+			"&exclude=hourly,minutely&appid=" +
+			APIKey;
+
+		// Log the queryURL
+		console.log("URL With LAT & LON" + uvqueryURL);
+
+		// AJAX call to the OpenWeatherMap OneCall API
+		$.ajax({
+			url: uvqueryURL,
+			method: "GET",
+		})
+			// Returned data stored in an object we are calling "onecallapiResult"
+			.then(function (onecallapiResult) {
+				// Log the resulting object
+				console.log(onecallapiResult);
+
+				// Add the UVindex to the HTML
+				$("#uvindex").text(onecallapiResult.current.uvi);
+
+				//  check value and colorize according to requirement
+				if (onecallapiResult.current.uvi < 2) {
+					$("#uvindex").addClass("bg-green");
+				}
+
+				if (
+					onecallapiResult.current.uvi >= 2.01 &&
+					onecallapiResult.current.uvi <= 5.0
+				) {
+					$("#uvindex").addClass("bg-yellow");
+				}
+
+				if (onecallapiResult.current.uvi >= 5.01) {
+					$("#uvindex").addClass("bg-red");
+				}
+
+				// Log the data in the console as well
+				console.log("UV Index: " + onecallapiResult.current.uvi);
+
+				// Now loop through the forecast array and display five days of forecast
+				for (let j = 0; j < 5; j++) {
+					const element = onecallapiResult.daily[j];
+					var counter = 0;
+
+					counter = j;
+					console.log("Counter value (J): " + counter);
+
+					// Build the card html
+
+					// Forecast Date is first and current is today
+					fcstDate = moment().format("MMMM Do YYYY") + counter + 1;
+
+					idValue = "#fcstdate" + parseInt(counter);
+					console.log("Forecast id and date= " + fcstDate + "ID= " + idValue);
+					$(idValue).text(fcstDate);
+
+					// Next is the weather forecast icon
+					idValue = "#fcstimage" + parseInt(counter);
+					var fcstIcon = $(idValue).attr(
+						"src",
+						"http://openweathermap.org/img/w/" +
+							onecallapiResult.daily[j].weather[0].icon +
+							".png"
+					);
+					fcstIcon = $(idValue).addClass("card-img-top");
+					console.log("fcstIcon " + fcstIcon);
+					$(idValue).append(fcstIcon);
+
+					idValue = "#fcsthumidity" + parseInt(counter);
+					$(idValue).text(
+						"Humidity: " + onecallapiResult.daily[j].weather[0].humidity
+					);
 
 					// Convert the temp to fahrenheit
-					var tempF = (apiResult.main.temp - 273.15) * 1.8 + 32;
+					var tempF =
+						(onecallapiResult.daily[j].weather[0].temp.day - 273.15) * 1.8 + 32;
 
 					// add temp content to html
-					$("#temp").text("Temperature (K) " + apiResult.main.temp);
-          $("#tempF").text("Temperature (F) " + tempF.toFixed(2));
+					$("#temp").text(
+						"Temperature (K) " + onecallapiResult.daily[j].weather[0].temp
+					);
 
-          var tempFdiv = $("<div>").addClass("tempF").text("Temperature (F) " + tempF.toFixed(2)); 
-          console.log("tempFdiv " + tempFdiv);   
-      
-          $("#cardimage").append(newIcon);  
+					idValue = "#fcsttemp" + parseInt(counter);
 
-          // The iconCode and URL concept does not seem to work - trying this technique which produces correct icon result
-          // $("#icon").html("<img src='http://openweathermap.org/img/w/" + apiResult.weather[0].icon + ".png' alt='Icon depicting current weather.'>");
-          
-          // Log the data in the console as well
-					console.log("Wind Speed: " + apiResult.wind.speed);
-					console.log("Humidity: " + apiResult.main.humidity);
-          console.log("Temperature (F): " + tempF);  
-          
-          // Use the latitude and longitude to get the UV Index
-          getUVIndex(apiResult);
-        });
-        
-      };
+					$(idValue).text("Temperature (F) " + tempF.toFixed(2));
 
-
-      function getUVIndex(apiResult) {
-        console.log(apiResult);
-            // Same API Key for latitude longitude
-            var savedResult = apiResult;
-
-            console.log("Saved Variable Results passed to getUVINdex" + savedResult);
-            console.log("Try for LAT:" + apiResult.coord.lat);
-            console.log("Try for LON:" + apiResult.coord.lon);
-            
-            // Here we are building the URL we need to query the database with lattitude and longitude 
-            var uvqueryURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + apiResult.coord.lat + "&lon=" + apiResult.coord.lon + "&appid=" + APIKey;
-
-                // Log the queryURL
-                console.log("URL With LAT & LON" + uvqueryURL);
-
-            // Here we run our AJAX call to the OpenWeatherMap API
-            $.ajax({
-              url: uvqueryURL,
-              method: "GET",
-            })
-              // We store all of the retrieved data inside of an object called "response"
-              .then(function (uvapiResult) {
-      
-                // Log the resulting object
-                console.log(uvapiResult);
-      
-                // Add the UVindex to the HTML  
-                $("#uvindex").text("UV Index: " + uvapiResult.value);
-
-              //  check value and colorize according to requirement   
-                if (uvapiResult.value < 2) {
-                  $("#uvindex").addClass("bg-green");
-              }
-        
-        
-              if (uvapiResult.value >= 2.01 && uvapiResult.value <= 5.00) {
-                  $("#uvindex").addClass("bg-yellow")
-              }
-        
-              if (uvapiResult.value >= 5.01) {
-                  $("#uvindex").addClass("bg-red")
-              }
-      
-     
-                // Log the data in the console as well
-                console.log("UV Index: " + uvapiResult.value);
-              });
-        
-            };
-
-          } );
+					var tempFdiv = $("<div>")
+						.addClass("tempF")
+						.text(tempF.toFixed(2) + " Temperature (F)");
+					console.log("tempFdiv " + tempFdiv);
+				}
+			});
+	}
+});
