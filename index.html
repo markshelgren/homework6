@@ -41,8 +41,11 @@
 								id="citiesText"
 							/>
 						</form>
-						<p>Cities: <span id="citiesCount">0</span></p>
-						<ul id="citiesList"></ul>
+
+						<form id="citiesHistory" method="POST">
+							<p>Cities: <span id="citiesCount">0</span></p>
+							<ul id="citiesList"></ul>
+						</form>
 					</div>
 				</div>
 
@@ -52,7 +55,6 @@
 							<h2 id="cardtitle" class="card-title"><strong></strong></h2>
 							<img id="cardimage" alt="Card image cap" />
 						</div>
-
 						<div class="card-body">
 							<p id="tempF" class="card-text"></p>
 							<p id="humidity" class="card-text"></p>
@@ -68,13 +70,55 @@
 
 					<div class="row row-horizon" id="fcstsection">
 						<div class="col-md-2">
+							<div class="card text-white bg-primary mb-3">
+								<div class="card-body">
+									<h5 class="card-title" id="fcstdate0"></h5>
+									<p class="card-text">
+										<img id="fcstimage0" alt="Card image cap" />
+									</p>
+									<p class="card-text" id="fcsttemp0"></p>
+									<p class="card-text" id="fcsthumidity0"></p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2">
 							<div class="card-body">
-								<h5 class="card-title" id="fcstdate0"></h5>
+								<h5 class="card-title" id="fcstdate1"></h5>
 								<p class="card-text">
-									<img id="fcstimage0" alt="Card image cap" />
+									<img id="fcstimage1" alt="Card image cap" />
 								</p>
-								<p class="card-text" id="fcsttemp0"></p>
-								<p class="card-text" id="fcsthumidity0"></p>
+								<p class="card-text" id="fcsttemp1"></p>
+								<p class="card-text" id="fcsthumidity1"></p>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="card-body">
+								<h5 class="card-title" id="fcstdate2"></h5>
+								<p class="card-text">
+									<img id="fcstimage2" alt="Card image cap" />
+								</p>
+								<p class="card-text" id="fcsttemp2"></p>
+								<p class="card-text" id="fcsthumidity2"></p>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="card-body">
+								<h5 class="card-title" id="fcstdate3"></h5>
+								<p class="card-text">
+									<img id="fcstimage3" alt="Card image cap" />
+								</p>
+								<p class="card-text" id="fcsttemp3"></p>
+								<p class="card-text" id="fcsthumidity3"></p>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="card-body">
+								<h5 class="card-title" id="fcstdate4"></h5>
+								<p class="card-text">
+									<img id="fcstimage4" alt="Card image cap" />
+								</p>
+								<p class="card-text" id="fcsttemp4"></p>
+								<p class="card-text" id="fcsthumidity4"></p>
 							</div>
 						</div>
 					</div>

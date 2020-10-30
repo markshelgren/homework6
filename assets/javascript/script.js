@@ -16,7 +16,11 @@ $(document).ready(function () {
 
 	// retrieve today's date using moment and format for output
 	var today = moment().format("MMMM Do YYYY");
+
 	console.log(today);
+
+	// retrieve local storage
+	init();
 
 	rendercities();
 
@@ -28,13 +32,42 @@ $(document).ready(function () {
 
 		// Render a new li for each cities
 		for (var i = 0; i < cities.length; i++) {
+			var cityName = cities[i];
+
 			var li = document.createElement("li");
-			li.textContent = cities[i];
+			// li.textContent = cityName;
+			li.setAttribute("data-city", cityName);
+
+			var button = document.createElement("button");
+			button.textContent = cityName;
+			li.appendChild(button);
 			citiesList.appendChild(li);
 		}
 	}
 
-	// When form is submitted...
+	// When a element inside of the City List is clicked...
+	citiesHistory.addEventListener("click", function (event) {
+		event.preventDefault();
+
+		var element = event.target;
+		console.log(element);
+
+		// If that element is a button...
+		if (element.matches("button") === true) {
+			// Get its data value and sisplay forecast for that City
+			var citySelected = element.parentElement.getAttribute("data-city");
+			console.log(citySelected);
+
+			// Call the function to retrieve the weather for the city entered in the search
+			cityEntered = citySelected;
+			getWeather();
+
+			// Re-render the list
+			rendercities();
+		}
+	});
+
+	// When form is submitted for a newly searched City
 	citiesForm.addEventListener("submit", function (event) {
 		event.preventDefault();
 
@@ -183,8 +216,11 @@ $(document).ready(function () {
 
 					// Build the card html
 
-					// Forecast Date is first and current is today
-					fcstDate = moment().format("MMMM Do YYYY") + counter + 1;
+					// Forecast Date
+					var today = moment().format("MMMM Do YYYY");
+					var fcstDate = moment()
+						.add(counter + 1, "days")
+						.format("MMMM Do YYYY");
 
 					idValue = "#fcstdate" + parseInt(counter);
 					console.log("Forecast id and date= " + fcstDate + "ID= " + idValue);
@@ -203,18 +239,13 @@ $(document).ready(function () {
 					$(idValue).append(fcstIcon);
 
 					idValue = "#fcsthumidity" + parseInt(counter);
-					$(idValue).text(
-						"Humidity: " + onecallapiResult.daily[j].weather[0].humidity
-					);
+					$(idValue).text("Humidity: " + onecallapiResult.daily[j].humidity);
 
 					// Convert the temp to fahrenheit
-					var tempF =
-						(onecallapiResult.daily[j].weather[0].temp.day - 273.15) * 1.8 + 32;
+					var tempF = (onecallapiResult.daily[j].temp.day - 273.15) * 1.8 + 32;
 
 					// add temp content to html
-					$("#temp").text(
-						"Temperature (K) " + onecallapiResult.daily[j].weather[0].temp
-					);
+					$("#temp").text("Temperature (K) " + onecallapiResult.daily[j].temp);
 
 					idValue = "#fcsttemp" + parseInt(counter);
 
@@ -226,5 +257,18 @@ $(document).ready(function () {
 					console.log("tempFdiv " + tempFdiv);
 				}
 			});
+	}
+
+	function init() {
+		// Get stored scores from localStorage
+		// Parsing the JSON string to an object
+
+		var storedCities = JSON.parse(localStorage.getItem("storedCities"));
+
+		// If Scores were retrieved from localStorage, update the Scores array to it
+		if (storedCities !== null) {
+			cities = storedCities;
+		}
+		console.log("storedCities: ", storedCities);
 	}
 });
