@@ -12,12 +12,10 @@ $(document).ready(function () {
 
 	var idValue = "";
 
-	var cities = ["Irvine", "Grants Pass"];
+	var cities = [];
 
 	// retrieve today's date using moment and format for output
 	var today = moment().format("MMMM Do YYYY");
-
-	console.log(today);
 
 	// retrieve local storage
 	init();
@@ -43,6 +41,8 @@ $(document).ready(function () {
 			li.appendChild(button);
 			citiesList.appendChild(li);
 		}
+
+		storeCities();
 	}
 
 	// When a element inside of the City List is clicked...
@@ -260,8 +260,7 @@ $(document).ready(function () {
 	}
 
 	function init() {
-		// Get stored scores from localStorage
-		// Parsing the JSON string to an object
+		// Get stored cities from localStorage - parsinbg the JSON to the array
 
 		var storedCities = JSON.parse(localStorage.getItem("storedCities"));
 
@@ -269,6 +268,11 @@ $(document).ready(function () {
 		if (storedCities !== null) {
 			cities = storedCities;
 		}
-		console.log("storedCities: ", storedCities);
+	}
+
+	function storeCities() {
+		// Stringify and set localStorage to Cities array
+
+		localStorage.setItem("storedCities", JSON.stringify(cities));
 	}
 });
