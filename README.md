@@ -9,7 +9,9 @@ The cities the user has entered are displayed in a drop down list. The user can 
 The last of cities are saved in local storage so that when the user leaves the page or restarts the page it will display the wether results for the last city being viewed when the page was exited.
 
 The following is a url to the page that can be executed.
+https://markshelgren.github.io/homework6/
 
 The following is a url to the Github repository.
+https://github.com/markshelgren/homework6
 
 ![Sample results with forecast](sample.png)
