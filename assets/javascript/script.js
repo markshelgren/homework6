@@ -9,6 +9,7 @@ $(document).ready(function () {
 	var citiesList = document.querySelector("#citiesList");
 	var citiesCountSpan = document.querySelector("#citiesCount");
 	var cityEntered = "";
+	var lastSearched = "";
 
 	var idValue = "";
 
@@ -79,9 +80,14 @@ $(document).ready(function () {
 		}
 
 		// Add new citiesText to cities array, clear the input
-		cities.push(citiesText);
+
+		if (!cities.includes(citiesText)) {
+			cities.push(citiesText);
+		}
+
 		citiesInput.value = "";
 		cityEntered = citiesText;
+		lastSearched = citiesText;
 
 		// Call the function to retrieve the weather for the city entered in the search
 		getWeather();
@@ -267,6 +273,11 @@ $(document).ready(function () {
 		// If Scores were retrieved from localStorage, update the Scores array to it
 		if (storedCities !== null) {
 			cities = storedCities;
+
+			lastSearched = JSON.parse(localStorage.getItem("lastCity"));
+			cityEntered = lastSearched;
+
+			getWeather();
 		}
 	}
 
@@ -274,5 +285,6 @@ $(document).ready(function () {
 		// Stringify and set localStorage to Cities array
 
 		localStorage.setItem("storedCities", JSON.stringify(cities));
+		localStorage.setItem("lastCity", JSON.stringify(cityEntered));
 	}
 });
