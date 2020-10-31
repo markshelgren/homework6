@@ -12,4 +12,4 @@ The following is a url to the page that can be executed.
 
 The following is a url to the Github repository.
 
-![Sample results with forecast]{sample.png}
+![Sample results with forecast](sample.png)
