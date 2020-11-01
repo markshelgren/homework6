@@ -25,16 +25,14 @@ $(document).ready(function () {
 
 	function rendercities() {
 		// Clear citiesList element and update citiesCountSpan
-
 		citiesList.innerHTML = "";
 		citiesCountSpan.textContent = cities.length;
 
-		// Render a new li for each cities
+		// Render a new li for each city
 		for (var i = 0; i < cities.length; i++) {
 			var cityName = cities[i];
 
 			var li = document.createElement("li");
-			// li.textContent = cityName;
 			li.setAttribute("data-city", cityName);
 
 			var button = document.createElement("button");
@@ -55,7 +53,7 @@ $(document).ready(function () {
 
 		// If that element is a button...
 		if (element.matches("button") === true) {
-			// Get its data value and sisplay forecast for that City
+			// Get its data value and display forecast for that City
 			var citySelected = element.parentElement.getAttribute("data-city");
 			console.log(citySelected);
 
@@ -79,7 +77,7 @@ $(document).ready(function () {
 			return;
 		}
 
-		// Add new citiesText to cities array, clear the input
+		// Add new citiesText to cities array
 
 		if (!cities.includes(citiesText)) {
 			cities.push(citiesText);
@@ -117,7 +115,7 @@ $(document).ready(function () {
 			url: queryURL,
 			method: "GET",
 		})
-			// We store all of the retrieved data inside of an object called "response"
+			// Store all of the retrieved data in object called "apiResult"
 			.then(function (apiResult) {
 				$("col-sm-10 text-left");
 
@@ -144,9 +142,10 @@ $(document).ready(function () {
 					.text(tempF.toFixed(2) + " Temperature (F)");
 				console.log("tempFdiv " + tempFdiv);
 
+				// Build and display the icon
 				var newIcon = $("#cardimage").attr(
 					"src",
-					"http://openweathermap.org/img/w/" +
+					"https://openweathermap.org/img/w/" +
 						apiResult.weather[0].icon +
 						".png"
 				);
@@ -236,7 +235,7 @@ $(document).ready(function () {
 					idValue = "#fcstimage" + parseInt(counter);
 					var fcstIcon = $(idValue).attr(
 						"src",
-						"http://openweathermap.org/img/w/" +
+						"https://openweathermap.org/img/w/" +
 							onecallapiResult.daily[j].weather[0].icon +
 							".png"
 					);
@@ -266,11 +265,11 @@ $(document).ready(function () {
 	}
 
 	function init() {
-		// Get stored cities from localStorage - parsinbg the JSON to the array
+		// Get stored cities from localStorage - parsing the JSON to the array
 
 		var storedCities = JSON.parse(localStorage.getItem("storedCities"));
 
-		// If Scores were retrieved from localStorage, update the Scores array to it
+		// If Cities were retrieved from localStorage, update the Cities array
 		if (storedCities !== null) {
 			cities = storedCities;
 

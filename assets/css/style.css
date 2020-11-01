@@ -123,3 +123,7 @@ h2 {
 #todaycard {
 	border-style: ridge;
 }
+.citylistClass {
+	height: 300px;
+	overflow-y: scroll;
+}

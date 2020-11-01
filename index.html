@@ -16,14 +16,17 @@
 			rel="stylesheet"
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
 		/>
-
+		<link
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
 		<link rel="stylesheet" href="assets/css/style.css" />
 	</head>
 	<body>
 		<nav class="navbar navbar-inverse">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand text-center">Weather Dashboard</a>
+					<p class="text-white">Weather Dashboard</p>
 				</div>
 			</div>
 		</nav>
@@ -43,8 +46,11 @@
 						</form>
 
 						<form id="citiesHistory" method="POST">
-							<p>Cities: <span id="citiesCount">0</span></p>
-							<ul id="citiesList"></ul>
+							<p>Cities: <span id="citiesCount"></span></p>
+							<ul
+								class="nav nav-pills nav-stacked citylistClass"
+								id="citiesList"
+							></ul>
 						</form>
 					</div>
 				</div>
