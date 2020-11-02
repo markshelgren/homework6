@@ -6,7 +6,7 @@ The results include the current weather and the next five days forecast.
 
 The cities the user has entered are displayed in a drop down list. The user can enter a city into the prompt area or select a city from the drop down list.
 
-The last of cities are saved in local storage so that when the user leaves the page or restarts the page it will display the wether results for the last city being viewed when the page was exited.
+The list of cities are saved in local storage so that when the user leaves the page or restarts the page it will display the weather results for the last city being viewed when the page was exited.
 
 The following is a url to the page that can be executed.
 https://markshelgren.github.io/homework6/
