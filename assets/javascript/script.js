@@ -44,7 +44,7 @@ $(document).ready(function () {
 		storeCities();
 	}
 
-	// When a element inside of the City List is clicked...
+	// When an element inside of the City List is clicked...
 	citiesHistory.addEventListener("click", function (event) {
 		event.preventDefault();
 
@@ -281,7 +281,7 @@ $(document).ready(function () {
 	}
 
 	function storeCities() {
-		// Stringify and set localStorage to Cities array
+		// Stringify and set localStorage to Cities array and last city searched
 
 		localStorage.setItem("storedCities", JSON.stringify(cities));
 		localStorage.setItem("lastCity", JSON.stringify(cityEntered));
