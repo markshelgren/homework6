@@ -1,4 +1,4 @@
-# homework6
+# Weather Dashboard
 
 This is a single function web page that calls a free, open API to retrieve the current weather and weather forecast for cities entered by the user one city at a time.
 
